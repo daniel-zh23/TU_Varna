@@ -1,0 +1,6 @@
+
+*.class
+out/.DS_Store
+out/production/.DS_Store
+out/production/TU_Varna/Main.class
+out
