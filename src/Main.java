@@ -1,5 +1,9 @@
+import Core.Contracts.EngineC;
+import Core.Engine;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello project!");
+        EngineC engine = new Engine();
+        engine.run();
     }
 }
