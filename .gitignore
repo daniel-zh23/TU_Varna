@@ -3,3 +3,7 @@
 .idea/
 out/
 *.iml
+
+# MacOS
+.DS_Store
+.target/
