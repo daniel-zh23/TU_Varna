@@ -11,4 +11,10 @@ public final class OutputMessages {
             help           prints this information
             exit           exists the program\s""";
     public static final String invalidCommandMessage = "Invalid command type \"help\" to see a list of commands.";
+    public static final String fileOpened = "Successfully opened %s.";
+    public static final String fileNotFoundNewCreated = "File was not found so new file was created with path %s.";
+    public static final String fileAlreadyOpened = "File is already opened, please close it before opening new file.";
+    public static final String fileClosed = "Successfully closed %s.";
+    public static final String fileCannotBeCreated = "File cannot be created.";
+    public static final String exitMessage = "Exiting the program...";
 }
