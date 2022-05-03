@@ -17,4 +17,5 @@ public final class OutputMessages {
     public static final String fileClosed = "Successfully closed %s.";
     public static final String fileCannotBeCreated = "File cannot be created.";
     public static final String exitMessage = "Exiting the program...";
+    public static final String FileOpenedEmpty = "Successfully opened empty file (%s).";
 }

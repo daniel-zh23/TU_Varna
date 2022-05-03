@@ -2,11 +2,9 @@ package Core;
 
 import Core.Contracts.ControllerC;
 import Core.Contracts.EngineC;
+import Core.ControllerXML.Controller;
 import IO.ConsoleController.ControllerIO;
-import IO.Contracts.FileReaderC;
-import IO.ReaderXML.Reader;
 import Messages.OutputMessages;
-import Models.Table;
 
 public class Engine implements EngineC {
     private IO.Contracts.Reader consoleController;
