@@ -6,6 +6,7 @@ import IO.Contracts.FileReaderC;
 import IO.ReaderXML.Reader;
 import Messages.OutputMessages;
 import Models.Table;
+import jakarta.xml.bind.UnmarshalException;
 
 import java.io.FileNotFoundException;
 
@@ -14,15 +15,12 @@ public class Controller implements ControllerC {
     private FileReaderC fileReader;
 
     public Controller(){
-        fileReader = new Reader<Table>();
-
+        this.fileReader = new Reader<Table>();
     }
     @Override
     public String open(String fileLocation) {
         try {
-            table = (Table)fileReader.open(fileLocation);
-
-            return String.format(OutputMessages.fileOpened, fileLocation);
+            this.table = (Table) this.fileReader.open(fileLocation);
         }
         catch (Exception e) {
             if (e instanceof FileAlreadyOpenedException){
@@ -30,29 +28,70 @@ public class Controller implements ControllerC {
             }
             if (e instanceof FileNotFoundException) {
                 try {
-                    fileReader.createFile(fileLocation);
+                    this.fileReader.createFile(fileLocation);
+                    this.table = new Table();
                     return String.format(OutputMessages.fileNotFoundNewCreated, fileLocation);
                 }
                 catch (Exception e1) {
                     return OutputMessages.fileCannotBeCreated;
                 }
             }
-            return String.format(OutputMessages.fileOpened, fileLocation);
+            if (e instanceof UnmarshalException && e.getMessage() != null){
+                return OutputMessages.fileDifferentData;
+            }
+            else {
+                this.table = new Table();
+                return OutputMessages.fileOpenedEmpty;
+            }
+        }
+        return String.format(OutputMessages.fileOpened, fileLocation);
+    }
+
+    @Override
+    public String close() {
+        if (this.table != null) {
+            this.table = null;
+            return this.fileReader.close();
+        }
+        return OutputMessages.noFileOpened;
+    }
+
+    @Override
+    public String saveAs(String fileLocation) {
+        try {
+            if (table != null){
+                this.fileReader.saveAs(this.table, fileLocation);
+                return String.format(OutputMessages.fileSavedAsSuccessfully, fileLocation);
+            }
+            throw new Exception();
+        }
+        catch (Exception e) {
+            return OutputMessages.noFileOpened;
         }
     }
 
     @Override
-    public void close() {
-
+    public String save() {
+        //TODO: save - exceptions
+        try {
+            this.fileReader.save(this.table);
+            return String.format(OutputMessages.fileSavedSuccessfully, this.fileReader.getFileLocation());
+        }
+        catch (Exception e) {
+            return OutputMessages.noFileOpened;
+        }
     }
 
     @Override
-    public void saveAs(Table data, String fileLocation) {
-
+    public String print() {
+        if (this.table != null) {
+            return this.table.toString();
+        }
+        return OutputMessages.noTable;
     }
 
     @Override
-    public void save() {
-
+    public String edit(String cell, String data) {
+        return null;
     }
 }

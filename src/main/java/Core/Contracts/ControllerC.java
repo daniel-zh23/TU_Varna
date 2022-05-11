@@ -4,7 +4,9 @@ import Models.Table;
 
 public interface ControllerC {
 String open(String fileLocation);
-void close();
-void saveAs(Table data, String fileLocation);
-void save();
+String close();
+String saveAs(String fileLocation);
+String save();
+String print();
+String edit(String cell, String data);
 }

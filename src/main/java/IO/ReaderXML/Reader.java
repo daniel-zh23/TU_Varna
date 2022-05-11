@@ -20,6 +20,11 @@ public class Reader<T> implements FileReaderC<T> {
     }
 
     @Override
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    @Override
     public T open(String fileLocation) throws FileAlreadyOpenedException, JAXBException, FileNotFoundException {
         if (hasFile){
             throw new FileAlreadyOpenedException(OutputMessages.fileAlreadyOpened);
@@ -36,22 +41,29 @@ public class Reader<T> implements FileReaderC<T> {
     public void save(T data) throws Exception{
         JAXBContext context = JAXBContext.newInstance(Table.class);
         Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.marshal(data, new FileOutputStream(fileLocation));
     }
 
     @Override
-    public void saveAs(String data, String fileLocation) {
-
+    public void saveAs(T data, String fileLocation) throws JAXBException, IOException {
+        createFile(fileLocation);
+        JAXBContext context = JAXBContext.newInstance(Table.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(data, new FileOutputStream(fileLocation));
     }
 
     @Override
     public String close() {
-        hasFile = false;
-        return String.format(OutputMessages.fileClosed, fileLocation);
+        String result = String.format(OutputMessages.fileClosed, this.fileLocation);
+        this.hasFile = false;
+        this.fileLocation = null;
+        return result;
     }
 
     @Override
-    public void createFile(String fileLocation) throws Exception{
+    public void createFile(String fileLocation) throws IOException{
         File file = new File(fileLocation);
         if (file.createNewFile()) {
             hasFile = true;
