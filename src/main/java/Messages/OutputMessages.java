@@ -15,7 +15,7 @@ public final class OutputMessages {
             exit                          exists the program\s""";
     public static final String invalidCommandMessage = "Invalid command type \"help\" to see a list of commands.";
     public static final String exitMessage = "Exiting the program...";
-    public static final String commandRequireTwoParameters = "Command \"%s\" require 2 parameters.";
+    public static final String commandRequireMoreParameters = "Command \"%s\" require %s parameters.";
     //File Messages - open
     public static final String fileOpened = "Successfully opened %s.";
     public static final String fileNotFoundNewCreated = "File was not found so new file was created with path %s.";
@@ -31,4 +31,7 @@ public final class OutputMessages {
     public static final String noTable = "There is not currently open table.";
     //File Messages - close
     public static final String noFileOpened = "There is no opened file.";
+    //Controller Messages - edit
+    public static final String invalidCell = "Invalid cell type \"help\" to see a list of commands.";
+    public static final String successfulEdit = "Cell %s is edited successfully.";
 }

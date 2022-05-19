@@ -9,20 +9,21 @@ import Models.Table;
 import jakarta.xml.bind.UnmarshalException;
 
 import java.io.FileNotFoundException;
+import java.util.Locale;
 
 public class Controller implements ControllerC {
     private Table table;
     private FileReaderC fileReader;
 
     public Controller(){
-        this.fileReader = new Reader<Table>();
+        this.fileReader = new Reader<Table>(); //Creates an instance of the file reader
     }
     @Override
     public String open(String fileLocation) {
         try {
-            this.table = (Table) this.fileReader.open(fileLocation);
+            this.table = (Table) this.fileReader.open(fileLocation); //Tries to open the file and unmarshal the table
         }
-        catch (Exception e) {
+        catch (Exception e) { //Catches if any exceptions are thrown and return the proper message to the user
             if (e instanceof FileAlreadyOpenedException){
                 return OutputMessages.fileAlreadyOpened;
             }
@@ -72,7 +73,6 @@ public class Controller implements ControllerC {
 
     @Override
     public String save() {
-        //TODO: save - exceptions
         try {
             this.fileReader.save(this.table);
             return String.format(OutputMessages.fileSavedSuccessfully, this.fileReader.getFileLocation());
@@ -92,6 +92,17 @@ public class Controller implements ControllerC {
 
     @Override
     public String edit(String cell, String data) {
-        return null;
+        data = data.toUpperCase(Locale.ROOT);
+        try {
+            if (this.table != null) {
+                String[] cellData = cell.split("");
+                this.table.editCell(Integer.parseInt(cellData[1]), Integer.parseInt(cellData[3]), data);
+                return String.format(OutputMessages.successfulEdit, cell);
+            }
+            return OutputMessages.noTable;
+        }
+        catch (Exception e) {
+            return OutputMessages.invalidCell;
+        }
     }
 }
