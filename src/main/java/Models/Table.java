@@ -17,7 +17,7 @@ public class Table {
         this.list[row - 1][col - 1] = data;
     }
 
-    private double getCellData(String formula) {
+    private double getCellData(String formula) { //Gets data from cell address.
         String[] data = formula.split("");
         try{
             int row = Integer.parseInt(data[1]) - 1;
@@ -29,8 +29,8 @@ public class Table {
         }
     }
 
-    private String calculateFormula(String formula){
-        try {
+    private String calculateFormula(String formula){ //Gets formula from caller and calculates it,
+        try {                                           // in case of invalid formula or invalid data returns ERROR.
             String[] formulaComponents = formula.split(" ");
             double a = 0;
             double b = 0;
@@ -61,7 +61,7 @@ public class Table {
     }
 
     @Override
-    public String toString() {
+    public String toString() {  //When printing all formulas are being calculated.
         StringBuilder sb = new StringBuilder();
         for (var row: this.list) {
             sb.append("|");

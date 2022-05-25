@@ -49,7 +49,7 @@ public class Controller implements ControllerC {
     }
 
     @Override
-    public String close() {
+    public String close() {  //Looks if the table field is empty, if it is then there isn't opened file.
         if (this.table != null) {
             this.table = null;
             return this.fileReader.close();
