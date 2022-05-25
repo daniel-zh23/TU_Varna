@@ -3,6 +3,7 @@ package Models;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @XmlRootElement(name="table")
@@ -58,7 +59,8 @@ public class Table {
                 case "^" -> Math.pow(a, b);
                 default -> 0;
             };
-            return result+"";
+            DecimalFormat formater = new DecimalFormat("0.#");
+            return formater.format(result);
         }
         catch (Exception e) {
             return "ERROR";
