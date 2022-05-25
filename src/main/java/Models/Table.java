@@ -3,6 +3,8 @@ package Models;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.util.Arrays;
+
 @XmlRootElement(name="table")
 public class Table {
 
@@ -10,7 +12,10 @@ public class Table {
     private String[][] list;
 
     public Table(){
-    list = new String[4][5];
+    this.list = new String[4][5];
+        for (var row: this.list) {
+            Arrays.fill(row, "");
+        }
     }
 
     public void editCell(int row, int col, String data){

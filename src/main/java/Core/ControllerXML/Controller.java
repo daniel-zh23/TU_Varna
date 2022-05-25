@@ -93,6 +93,7 @@ public class Controller implements ControllerC {
     @Override
     public String edit(String cell, String data) {
         data = data.toUpperCase(Locale.ROOT);
+        cell = cell.toUpperCase(Locale.ROOT);
         try {
             if (this.table != null) {
                 String[] cellData = cell.split("");
